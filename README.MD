@@ -23,10 +23,15 @@
   <tr>
     <td><img src="https://github.com/pangcrd/espnow-lvgl/blob/main/images/20250210_111911.jpg" alt="Image 1" width="400"/></td>
     <td><img src="https://github.com/pangcrd/espnow-lvgl/blob/main/images/20250210_111823.jpg" alt="Image 2" width="400"/></td> 
+  </tr>
+</table>  
+
+<table>
+  <tr>
     <td><img src="https://github.com/pangcrd/espnow-lvgl/blob/main/images/20250210_111833.jpg" alt="Image 1" width="400"/></td>
     <td><img src="https://github.com/pangcrd/espnow-lvgl/blob/main/images/20250210_111846.jpg" alt="Image 2" width="400"/></td>  
   </tr>
-</table>  
+</table>   
 ## 🎬 Demo video test 👇  
 
 📺 [Youtube Channel](https://www.youtube.com/@pangcrd).
