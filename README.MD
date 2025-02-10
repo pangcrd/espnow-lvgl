@@ -34,5 +34,5 @@
 </table>   
 ## 🎬 Demo video test 👇  
 
-📺 [Youtube Channel](https://www.youtube.com/@pangcrd).
+📺 [Youtube](https://youtube.com/shorts/Y3YMU5yD0dk).
 
