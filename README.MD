@@ -2,12 +2,12 @@
 
 ## 🗯️ About this project  
 - 🌟ESP-NOW is a form of IOT local, that is a network of devices that communicate directly without going over the Internet.
-- 🌟I'm using two ESP32 board for communicate.Change your board type in [platformio.ini](https://github.com/pangcrd/espnow-lvgl/blob/main/ScreenLVGL-master/platformio.ini) file.
-- 🌟Design UI on [Squareline Studio](https://squareline.io/)V1.5 
-- 🌟Change your SPI PIN in [User_Setup.h](https://github.com/pangcrd/espnow-lvgl/blob/main/ScreenLVGL-master/lib/TFT_eSPI/User_Setup.h) file.
-- 🌟Using ESP32-2432S028R v3 Cheap Yellow Display for master device. And another ESP32 board for slave.
+- 🌟I'm using two ESP32 board for communicate.Change your board type in [platformio.ini](https://github.com/pangcrd/espnow-lvgl/blob/main/ScreenLVGL-master/platformio.ini) file.  
+- 🌟Change your DHT PIN and relay GPIO in [main.cpp](https://github.com/pangcrd/espnow-lvgl/blob/main/ESP-Slave/src/main.cpp) file.
+- 🌟Using ESP32-2432S028R v3 Cheap Yellow Display for master device. And another ESP32 board for slave.  
+- 🌟Get the MAC address for 2 devices by running the code in [GetMACaddress](https://github.com/pangcrd/espnow-lvgl/blob/main/GetMACaddress/main.cpp) folder.
 - 🌟In this test i use DHT22 temperature and Humidity sensor + 4 relay channel for board ESP32 slave.
-
+- 🌟Design UI on [Squareline Studio](https://squareline.io/)V1.4 
 
 ## 🛠 Some function
 - ⚡Enable or disable all switches. Each can be turned on and off individually.
