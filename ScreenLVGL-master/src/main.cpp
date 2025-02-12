@@ -210,11 +210,11 @@ void setup (){
 
     EspNow_init();
 
-   /** lv timer for run task */
-    lv_timer_create(led_update_cb, 200, NULL);
-    lv_timer_create(DHTtimer,2000,NULL);
-    lv_timer_create(checkTimeOut,500,NULL);
-    lv_timer_create(powersaveMode,50,NULL);
+    /** lv timer for run task */
+    lv_timer_create(led_update_cb, 5, NULL);
+    lv_timer_create(DHTtimer,3000,NULL);
+    lv_timer_create(checkTimeOut,20,NULL);
+    lv_timer_create(powersaveMode,5,NULL);
 
     Serial.println( "Setup done" );
 }
