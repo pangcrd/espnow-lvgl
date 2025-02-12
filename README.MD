@@ -13,6 +13,7 @@
 - ⚡Enable or disable all switches. Each can be turned on and off individually.
 - ⚡Displays board ID and connection status.
 - ⚡Displays temperature and humidity values ​​and graphs.  
+- ⚡Update screen auto backlight control for power saving.  
   
 ## 🔎 Pinout
 ![schematic](https://github.com/pangcrd/espnow-lvgl/blob/main/images/cyd.png)  
