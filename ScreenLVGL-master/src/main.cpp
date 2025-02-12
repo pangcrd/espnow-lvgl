@@ -18,8 +18,12 @@
 #include <Arduino.h>
 #include "ESPNOWConfig.h"
 
+
 unsigned long lastRecvTime = 0; 
-const unsigned long timeout = 2000; /** Set timeout **/
+const unsigned long timeout = 2000; /** Set timeout for data recivied**/
+
+unsigned long lastTouchTime = 0;
+bool isDimmed = false;
 /** Don't forget to set Sketchbook location in File/Preferences to the path of your UI project (the parent foder of this INO file)*/
 /** Change to your screen resolution **/
 static const uint16_t screenWidth  = 320;
@@ -37,7 +41,7 @@ TFT_eSPI tft = TFT_eSPI( screenWidth, screenHeight ); /** TFT instance **/
 #define XPT2046_CS 33
 
 SPIClass tsSpi = SPIClass(VSPI);
-XPT2046_Touchscreen ts(XPT2046_CS, XPT2046_IRQ);
+XPT2046_Touchscreen ts (XPT2046_CS, XPT2046_IRQ);
 
 /** Run calib_touch files to get value  **/
 uint16_t touchScreenMinimumX = 200, touchScreenMaximumX = 3700, touchScreenMinimumY = 240,touchScreenMaximumY = 3800; 
@@ -147,6 +151,32 @@ void checkTimeOut(lv_timer_t * timer){
         DHTsensorRecv.id = 0;
     }
 }
+/** Screen brightness dimmed */
+void TFT_SET_BL(uint8_t Value) {
+    if (Value < 0 || Value > 100) {
+      printf("TFT_SET_BL Error \r\n");
+    } else {
+      analogWrite(TFT_BL, Value * 2.55);
+    }
+  }
+
+void powersaveMode(lv_timer_t *timer){
+
+    TS_Point p = ts.getPoint();
+    if (millis() - lastTouchTime > 10000 && !isDimmed) { /** After 10 seconds of not touching, the light will decrease **/ 
+        TFT_SET_BL(5);
+        isDimmed = true;
+    }
+
+    if (p.z > 200 ) { /** If the pressing upto 200, the backlight will turn on **/
+        Serial.println(touchRead(33));
+        lastTouchTime = millis();
+        if (isDimmed) {
+            TFT_SET_BL(100); /** Brightness 100%**/
+            isDimmed = false;
+        }
+    }
+}
 
 void setup (){
 
@@ -179,10 +209,12 @@ void setup (){
     ui_init();
 
     EspNow_init();
-    
+
+    /** lv timer for run task */
     lv_timer_create(led_update_cb, 100, NULL);
     lv_timer_create(DHTtimer,2000,NULL);
     lv_timer_create(checkTimeOut,100,NULL);
+    lv_timer_create(powersaveMode,100,NULL);
 
     Serial.println( "Setup done" );
 }
