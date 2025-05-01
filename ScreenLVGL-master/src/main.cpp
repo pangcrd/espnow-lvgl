@@ -208,7 +208,7 @@ void setup (){
 
     ui_init();
 
-    EspNow_init();
+    On_espnow();
 
     /** lv timer for run task */
     lv_timer_create(led_update_cb, 5, NULL);
