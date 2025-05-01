@@ -1,6 +1,8 @@
 #ifndef ESPNOWCONFIG_H
 #define ESPNOWCONFIG_H
 
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include <esp_now.h>
 #include <WiFi.h>
 
@@ -27,7 +29,8 @@ extern volatile bool dataReceived ;
 
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status);
 void OnDataRecv(const uint8_t * mac_addr, const uint8_t *incomingData, int len);
-void EspNow_init();
+void Espnow_init(void* pvParams);
+void On_espnow();
 void dataSend();
 
 #endif
