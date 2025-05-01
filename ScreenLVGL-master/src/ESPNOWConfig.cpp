@@ -1,5 +1,3 @@
-#include <esp_now.h>
-#include <WiFi.h>
 #include "ESPNOWConfig.h"
 
 /** This is all the data about the peer **/
@@ -58,34 +56,42 @@ void OnDataRecv(const uint8_t * mac_addr, const uint8_t *incomingData, int len) 
 }
 
 
-void EspNow_init() {
+void Espnow_init(void* pvParams){
+    WiFi.mode(WIFI_STA);
 
-  WiFi.mode(WIFI_STA);
-
-    /** Init ESP-NOW **/ 
     if (esp_now_init() != ESP_OK) {
         Serial.println("Error initializing ESP-NOW");
+        vTaskDelete(NULL);
         return;
-      }
+    }
 
-  /** Once ESPNow is successfully Init, we will register for Send CB to **/ 
-  /** Get the status of Trasnmitted packet **/  
+    esp_now_register_send_cb(OnDataSent);
 
-  esp_now_register_send_cb(OnDataSent);
-  memcpy(slave.peer_addr, MACAddress, 6);
-  slave.channel = 0;  
-  slave.encrypt = false;
+    memcpy(slave.peer_addr, MACAddress, 6);
+    slave.channel = 0;  
+    slave.encrypt = false;
 
-   /** Add peer  **/        
-   if (esp_now_add_peer(&slave) != ESP_OK){
-    Serial.println("Failed to add peer");
-    return;
-  }
-    /** Get recv packer info **/ 
-    esp_now_register_recv_cb(OnDataRecv);
+    bool peerAdded = false;
+    int retry = 0;
+    while (!peerAdded && retry < 10) {
+        if (esp_now_add_peer(&slave) == ESP_OK){
+            Serial.println("Peer added successfully");
+            peerAdded = true;
+        } else {
+            Serial.println("Failed to add peer. Retrying...");
+            vTaskDelay(pdMS_TO_TICKS(500)); 
+            retry++;
+        }
+    }
 
+    if (!peerAdded) {
+        Serial.println("Failed to add peer after retries");
+    }
 
-
+    vTaskDelete(NULL);  
+}
+void On_espnow(){
+  xTaskCreatePinnedToCore(Espnow_init, "espnow start", 2048, NULL, 3, NULL, 0);
 }
 /** Send data to Slave **/
 void dataSend(){
